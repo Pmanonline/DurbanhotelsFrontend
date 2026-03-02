@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import AdminSidebar from "./AdminSidebar";
-import AdminHeader from "./AdminHeader";
+import AdminHeader from "./Adminheader";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
