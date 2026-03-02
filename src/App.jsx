@@ -11,7 +11,7 @@ import ContactUs from "./pages/ContactUs";
 import MenuPage from "./pages/Menupage";
 import ServicesPage from "./pages/Services";
 import TestimonialsPage from "./pages/testimonial";
-import GalleryPage from "./pages/gallery";
+import GalleryPage from "./pages/Gallery.jsx";
 import MeetingsEventsPage from "./pages/Meetingseventspage";
 import FAQPage from "./pages/FAQ.jsx";
 import GymWellnessPage from "./pages/GymAndWellness.jsx";

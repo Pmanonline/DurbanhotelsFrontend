@@ -5,18 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>Umorus |</title>
+    <title>Durban International |</title>
     <meta
       name="description"
-      content="Showcasing Nigeria's finest achievements, culture, and heroes across various sectors" />
+      content="Showcasing Nigeria's finest achievements, culture, and heroes across various sectors"
+    />
     <meta name="theme-color" content="#166534" />
 
     <link rel="icon" type="image/svg+xml" href="/PrideLogo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" crossorigin src="/assets/index-DYSLIw9r.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-iioVRQGV.css">
+
+    <!-- ✅ Prevent dark/light flash on refresh -->
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme");
+        const darkMode = localStorage.getItem("darkMode");
+
+        const isDark =
+          theme === "dark" ||
+          (!theme && darkMode === "true") ||
+          (!theme && darkMode === null); // default to dark
+
+        if (isDark) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-CSjAeeYl.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B7k7YD_4.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>
