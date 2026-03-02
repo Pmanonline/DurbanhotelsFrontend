@@ -1,0 +1,439 @@
+ // import React, { useState, useEffect } from "react";
+// import { ChevronRight, ChevronLeft, Check, Save, Menu, X } from "lucide-react";
+
+// const UserProfile = () => {
+//   const [currentStep, setCurrentStep] = useState(1);
+//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+//   const [formData, setFormData] = useState({
+//     companyName: "",
+//     businessType: "",
+//     foundedYear: "",
+//     primaryContactName: "",
+//     email: "",
+//     phone: "",
+//     address: "",
+//     annualRevenue: "",
+//     employeeCount: "",
+//     taxId: "",
+//     ownerName: "",
+//     shareholderCount: "",
+//     industryCategory: "",
+//     businessModel: "",
+//     websiteUrl: "",
+//   });
+
+//   const [formValidation, setFormValidation] = useState({
+//     personalDetails: false,
+//     contactInformation: false,
+//     financialDetails: false,
+//     ownershipDetails: false,
+//     additionalDetails: false,
+//   });
+
+//   const steps = [
+//     { id: 1, title: "Company Basics", key: "personalDetails" },
+//     { id: 2, title: "Contact Information", key: "contactInformation" },
+//     { id: 3, title: "Financial Details", key: "financialDetails" },
+//     { id: 4, title: "Ownership Details", key: "ownershipDetails" },
+//     { id: 5, title: "Additional Details", key: "additionalDetails" },
+//   ];
+
+//   // Load saved data from localStorage
+//   useEffect(() => {
+//     const savedData = localStorage.getItem("userProfileFormData");
+//     if (savedData) {
+//       setFormData(JSON.parse(savedData));
+//     }
+//   }, []);
+
+//   // Save data to localStorage
+//   const saveProgress = () => {
+//     localStorage.setItem("userProfileFormData", JSON.stringify(formData));
+//     alert("Progress saved! You can continue later.");
+//   };
+
+//   const validateStep = (step) => {
+//     switch (step) {
+//       case 1:
+//         return (
+//           formData.companyName && formData.businessType && formData.foundedYear
+//         );
+//       case 2:
+//         return (
+//           formData.primaryContactName &&
+//           formData.email &&
+//           formData.phone &&
+//           formData.address
+//         );
+//       case 3:
+//         return (
+//           formData.annualRevenue && formData.employeeCount && formData.taxId
+//         );
+//       case 4:
+//         return formData.ownerName && formData.shareholderCount;
+//       case 5:
+//         return formData.industryCategory && formData.businessModel;
+//       default:
+//         return false;
+//     }
+//   };
+
+//   const handleNext = () => {
+//     if (validateStep(currentStep)) {
+//       const newValidation = { ...formValidation };
+//       newValidation[steps[currentStep - 1].key] = true;
+//       setFormValidation(newValidation);
+//       setCurrentStep(currentStep + 1);
+//     } else {
+//       alert("Please complete all required fields before proceeding.");
+//     }
+//   };
+
+//   const handlePrevious = () => {
+//     setCurrentStep(currentStep - 1);
+//   };
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       if (window.innerWidth >= 1024) {
+//         setIsSidebarOpen(false);
+//       }
+//     };
+
+//     window.addEventListener("resize", handleResize);
+//     return () => window.removeEventListener("resize", handleResize);
+//   }, []);
+
+//   // Modified sidebar component
+//   const renderSidebar = () => (
+//     <div
+//       className={`fixed lg:relative inset-y-0 left-0 w-64 bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-300 ease-in-out z-50 ${
+//         isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+//       }`}>
+//       <h2 className="text-xl font-bold mb-6">Business Form</h2>
+//       <ul className="space-y-4">
+//         {steps.map((step) => (
+//           <li
+//             key={step.id}
+//             className={`flex items-center cursor-pointer ${
+//               currentStep === step.id
+//                 ? "text-blue-500 font-bold"
+//                 : "text-gray-500"
+//             }`}
+//             onClick={() => {
+//               setCurrentStep(step.id);
+//               setIsSidebarOpen(false);
+//             }}>
+//             {formValidation[step.key] ? (
+//               <Check className="w-5 h-5 mr-2 text-green-500" />
+//             ) : (
+//               <span className="w-5 h-5 mr-2 bg-gray-200 rounded-full flex items-center justify-center">
+//                 {step.id}
+//               </span>
+//             )}
+//             <span>{step.title}</span>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+
+//   // Add backdrop for mobile
+//   const renderBackdrop = () =>
+//     isSidebarOpen && (
+//       <div
+//         className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+//         onClick={() => setIsSidebarOpen(false)}
+//       />
+//     );
+
+//   const renderStepContent = () => {
+//     switch (currentStep) {
+//       case 1:
+//         return (
+//           <div className="space-y-4">
+//             <h2 className="text-2xl font-bold">Company Basics</h2>
+//             <input
+//               type="text"
+//               name="companyName"
+//               placeholder="Company Name *"
+//               value={formData.companyName}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <select
+//               name="businessType"
+//               value={formData.businessType}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required>
+//               <option value="">Select Business Type *</option>
+//               <option value="LLC">LLC</option>
+//               <option value="Corporation">Corporation</option>
+//               <option value="Partnership">Partnership</option>
+//               <option value="Sole Proprietorship">Sole Proprietorship</option>
+//             </select>
+//             <input
+//               type="number"
+//               name="foundedYear"
+//               placeholder="Founded Year *"
+//               value={formData.foundedYear}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//           </div>
+//         );
+
+//       case 2:
+//         return (
+//           <div className="space-y-4">
+//             <h2 className="text-2xl font-bold">Contact Information</h2>
+//             <input
+//               type="text"
+//               name="primaryContactName"
+//               placeholder="Primary Contact Name *"
+//               value={formData.primaryContactName}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <input
+//               type="email"
+//               name="email"
+//               placeholder="Business Email *"
+//               value={formData.email}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <input
+//               type="tel"
+//               name="phone"
+//               placeholder="Phone Number *"
+//               value={formData.phone}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <textarea
+//               name="address"
+//               placeholder="Business Address *"
+//               value={formData.address}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//           </div>
+//         );
+
+//       case 3:
+//         return (
+//           <div className="space-y-4">
+//             <h2 className="text-2xl font-bold">Financial Details</h2>
+//             <input
+//               type="number"
+//               name="annualRevenue"
+//               placeholder="Annual Revenue *"
+//               value={formData.annualRevenue}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <input
+//               type="number"
+//               name="employeeCount"
+//               placeholder="Number of Employees *"
+//               value={formData.employeeCount}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <input
+//               type="text"
+//               name="taxId"
+//               placeholder="Tax Identification Number *"
+//               value={formData.taxId}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//           </div>
+//         );
+
+//       case 4:
+//         return (
+//           <div className="space-y-4">
+//             <h2 className="text-2xl font-bold">Ownership Details</h2>
+//             <input
+//               type="text"
+//               name="ownerName"
+//               placeholder="Primary Owner/CEO Name *"
+//               value={formData.ownerName}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//             <input
+//               type="number"
+//               name="shareholderCount"
+//               placeholder="Number of Shareholders *"
+//               value={formData.shareholderCount}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required
+//             />
+//           </div>
+//         );
+
+//       case 5:
+//         return (
+//           <div className="space-y-4">
+//             <h2 className="text-2xl font-bold">Additional Business Details</h2>
+//             <select
+//               name="industryCategory"
+//               value={formData.industryCategory}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required>
+//               <option value="">Select Industry Category *</option>
+//               <option value="Technology">Technology</option>
+//               <option value="Finance">Finance</option>
+//               <option value="Healthcare">Healthcare</option>
+//               <option value="Retail">Retail</option>
+//               <option value="Manufacturing">Manufacturing</option>
+//             </select>
+//             <select
+//               name="businessModel"
+//               value={formData.businessModel}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//               required>
+//               <option value="">Select Business Model *</option>
+//               <option value="B2B">Business to Business (B2B)</option>
+//               <option value="B2C">Business to Consumer (B2C)</option>
+//               <option value="C2C">Consumer to Consumer (C2C)</option>
+//               <option value="Subscription">Subscription Based</option>
+//             </select>
+//             <input
+//               type="url"
+//               name="websiteUrl"
+//               placeholder="Company Website URL"
+//               value={formData.websiteUrl}
+//               onChange={handleInputChange}
+//               className="w-full p-2 border rounded"
+//             />
+//           </div>
+//         );
+
+//       case 6:
+//         return (
+//           <div className="text-center space-y-4">
+//             <Check className="mx-auto text-green-500" size={64} />
+//             <h2 className="text-2xl font-bold">Profile Submission Complete</h2>
+//             <p>Your business profile has been successfully submitted.</p>
+//             <pre className="text-left bg-gray-100 p-4 rounded">
+//               {JSON.stringify(formData, null, 2)}
+//             </pre>
+//           </div>
+//         );
+
+//       default:
+//         return null;
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-300 flex p-4 mx-auto w-full">
+//       {/* Sidebar */}
+//       {renderBackdrop()}
+//       {renderSidebar()}
+
+//       {/* Main Form */}
+//       <div className="flex-1 bg-white shadow-xl rounded-lg p-8 ml-6">
+//         {/* Mobile Toggle Button */}
+//         <button
+//           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+//           className="lg:hidden p-2 mb-4 mod:mt-12">
+//           {isSidebarOpen ? (
+//             <X className="w-6 h-6" />
+//           ) : (
+//             <Menu className="w-6 h-6" />
+//           )}
+//         </button>
+//         {/* Progress Indicator */}
+//         <div className="flex justify-between mb-8">
+//           {steps.map((step) => (
+//             <div
+//               key={step.id}
+//               className={`w-full mx-2 h-2 rounded ${
+//                 currentStep > step.id || formValidation[step.key]
+//                   ? "bg-green-500"
+//                   : currentStep === step.id
+//                     ? "bg-blue-500"
+//                     : "bg-gray-300"
+//               }`}
+//             />
+//           ))}
+//         </div>
+
+//         {/* Form Content */}
+//         <div className="mb-6">{renderStepContent()}</div>
+
+//         {/* Navigation Buttons */}
+//         <div className="flex justify-between">
+//           {currentStep > 1 && currentStep < 6 && (
+//             <button
+//               onClick={handlePrevious}
+//               className="flex items-center bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
+//               <ChevronLeft className="mr-2" /> Previous
+//             </button>
+//           )}
+
+//           <div className="flex justify-between">
+//             {currentStep > 1 && currentStep < 6 && (
+//               <button
+//                 onClick={handlePrevious}
+//                 className="flex items-center bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded hover:bg-gray-300 text-sm sm:text-base">
+//                 <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> Previous
+//               </button>
+//             )}
+
+//             {currentStep < 6 && (
+//               <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+//                 {/* Save and Continue Later Button */}
+//                 <button
+//                   onClick={saveProgress}
+//                   className="flex items-center bg-gray-200 text-gray-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded hover:bg-gray-300 text-sm sm:text-base">
+//                   <Save className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+//                   <span className="hidden sm:inline">
+//                     Save and Continue Later
+//                   </span>
+//                   <span className="sm:hidden">Save</span>
+//                 </button>
+
+//                 {/* Next/Submit Button */}
+//                 <button
+//                   onClick={handleNext}
+//                   className="flex items-center bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded hover:bg-blue-600 text-sm sm:text-base">
+//                   {currentStep === 5 ? "Submit" : "Next"}{" "}
+//                   <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+//                 </button>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default UserProfile;
+node_modules
+node_modules.zip

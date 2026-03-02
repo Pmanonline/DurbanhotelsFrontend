@@ -1,0 +1,10 @@
+ <Hero />
+      <About />
+      <Services />
+      <Podcast />
+      <Resources />
+      <Testimonials />
+      <Events />
+      <SpiritualResources />
+      <TelegramChannel />
+      <Support />
