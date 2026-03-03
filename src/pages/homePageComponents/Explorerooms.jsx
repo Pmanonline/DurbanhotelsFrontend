@@ -1,23 +1,45 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import RoomCard from "../../components/RommCard";
+import { fetchRooms } from "../../features/Room/Roomslice";
 
 const ExploreRooms = () => {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: "-60px" });
+  const dispatch = useDispatch();
 
-  // Pull from Redux — same source as RoomsPage, guaranteed to have slug
-  const { rooms, loading } = useSelector((s) => s.rooms);
+  const { rooms, loading, error } = useSelector((s) => s.rooms);
   const featured = rooms.slice(0, 3);
+
+  // Fetch on mount if rooms not already loaded
+  useEffect(() => {
+    if (rooms.length === 0) {
+      dispatch(fetchRooms({ limit: 6, page: 1 }));
+    }
+  }, []); // eslint-disable-line
+
+  // Debug log — remove once confirmed working
+  useEffect(() => {
+    console.group("[ExploreRooms debug]");
+    console.log("loading:", loading);
+    console.log("error:", error);
+    console.log("rooms.length:", rooms.length);
+    console.log("featured:", featured);
+    if (featured.length > 0) {
+      console.log("first room slug:", featured[0]?.slug);
+      console.log("first room _id:", featured[0]?._id);
+      console.log("first room keys:", Object.keys(featured[0]));
+    }
+    console.groupEnd();
+  }, [loading, rooms.length]); // eslint-disable-line
 
   return (
     <section
       ref={sectionRef}
       className="relative bg-white dark:bg-navy-900 py-20 lg:py-28 overflow-hidden"
     >
-      {/* Background dot pattern */}
       <div
         className="absolute inset-0 opacity-[0.025] pointer-events-none"
         style={{
@@ -56,9 +78,15 @@ const ExploreRooms = () => {
           </motion.h2>
         </div>
 
-        {/* Cards grid */}
+        {/* Error state */}
+        {error && (
+          <p className="text-center text-red-400 text-sm mb-6">
+            Failed to load rooms: {String(error)}
+          </p>
+        )}
+
+        {/* Cards */}
         {loading && featured.length === 0 ? (
-          // Skeleton placeholders while rooms load
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {[1, 2, 3].map((i) => (
               <div
@@ -74,6 +102,10 @@ const ExploreRooms = () => {
               </div>
             ))}
           </div>
+        ) : featured.length === 0 ? (
+          <p className="text-center text-gray-400 dark:text-white/40 text-sm py-12">
+            No rooms to display — check console for details.
+          </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {featured.map((room, i) => (
@@ -82,7 +114,7 @@ const ExploreRooms = () => {
           </div>
         )}
 
-        {/* View All button */}
+        {/* View All */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
