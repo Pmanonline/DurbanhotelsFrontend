@@ -471,7 +471,7 @@ const Navbar = () => {
                       </a>
                     ),
                   )}
-                  <button
+                  {/* <button
                     onClick={toggleDark}
                     className="ml-auto text-white/25 hover:text-gold-400 transition-colors"
                   >
@@ -480,7 +480,7 @@ const Navbar = () => {
                     ) : (
                       <FaMoon className="w-4 h-4" />
                     )}
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

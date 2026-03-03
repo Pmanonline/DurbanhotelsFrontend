@@ -4,36 +4,40 @@ import { MdHotel } from "react-icons/md";
 import { FaUsers, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-// ── Import hotel images from src ──────────────────────────────────────────────
 import LobbyImage from "../../assets/images/gridImage1.jpg";
 import PoolImage from "../../assets/images/gridImage2.avif";
 import RoomImage from "../../assets/images/gridImage3.jpg";
 import GymImage from "../../assets/images/gridImage4.avif";
 
-// ── Animated Counter ──────────────────────────────────────────────────────────
-const CountUp = ({ target, duration = 2000, suffix = "" }) => {
+// ── Animated Counter — driven by external `start` boolean ─────────────────────
+const CountUp = ({ target, duration = 2000, suffix = "", start }) => {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const started = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
+    // Only run once when start becomes true
+    if (!start || started.current) return;
+    started.current = true;
+
+    let current = 0;
+    const totalSteps = duration / 16;
+    const step = target / totalSteps;
+
     const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
+      current += step;
+      if (current >= target) {
         setCount(target);
         clearInterval(timer);
       } else {
-        setCount(Math.floor(start));
+        setCount(Math.floor(current));
       }
     }, 16);
+
     return () => clearInterval(timer);
-  }, [inView, target, duration]);
+  }, [start, target, duration]);
 
   return (
-    <span ref={ref}>
+    <span>
       {count.toLocaleString()}
       {suffix}
     </span>
@@ -85,21 +89,30 @@ const imgVariants = {
 // ── Component ─────────────────────────────────────────────────────────────────
 const OurStory = () => {
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-60px" });
+  // Use 0px margin and a low threshold so it triggers reliably on mobile
+  const inView = useInView(sectionRef, {
+    once: true,
+    margin: "0px",
+    amount: 0.1,
+  });
 
-  const images = [
-    { src: LobbyImage, alt: "Hotel Lobby", className: "row-span-1" },
-    { src: PoolImage, alt: "Swimming Pool", className: "row-span-2" },
-    { src: RoomImage, alt: "Hotel Room", className: "row-span-1" },
-    { src: GymImage, alt: "Gym & Wellness", className: "row-span-1" },
-  ];
+  // Separate ref just for the stats row — triggers when stats scroll into view
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, {
+    once: true,
+    margin: "0px",
+    amount: 0.1,
+  });
+
+  // CountUp starts when EITHER the section or stats row is in view
+  const startCounting = inView || statsInView;
 
   return (
     <section
       ref={sectionRef}
       className="relative bg-white dark:bg-navy-900 py-20 lg:py-28 overflow-hidden"
     >
-      {/* Subtle background texture */}
+      {/* Background texture */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
@@ -154,7 +167,7 @@ const OurStory = () => {
               animate={inView ? "visible" : "hidden"}
               className="text-gray-600 dark:text-white/60 text-sm sm:text-base leading-relaxed mb-10 max-w-lg"
             >
-              Rooted in the vibrant Ogba district, Ikeja, DurbanInternational
+              Rooted in the vibrant Ogba district, Ikeja, Durban International
               Hotel has become the trusted address for C-suite travellers,
               weekend explorers, and global delegations seeking Lagos at its
               best. Our concierge-led experiences, award-winning dining, and
@@ -162,8 +175,8 @@ const OurStory = () => {
               yet unforgettable.
             </motion.p>
 
-            {/* Stat Cards */}
-            <div className="grid grid-cols-3     sm:grid-cols-3 gap-4 mb-10">
+            {/* Stat Cards — own ref so counting starts when these are visible */}
+            <div ref={statsRef} className="grid grid-cols-3 gap-4 mb-10">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -180,10 +193,14 @@ const OurStory = () => {
                     {stat.icon}
                   </div>
                   <p
-                    className="text-3xl mid:text-2xl font-bold text-navy-900 dark:text-white mb-1"
+                    className="text-2xl font-bold text-navy-900 dark:text-white mb-1"
                     style={{ fontFamily: "'Playfair Display', serif" }}
                   >
-                    <CountUp target={stat.value} duration={2000} />
+                    <CountUp
+                      target={stat.value}
+                      duration={2000}
+                      start={startCounting}
+                    />
                   </p>
                   <p className="text-gray-500 dark:text-white/50 text-xs tracking-wide">
                     {stat.label}
@@ -215,7 +232,6 @@ const OurStory = () => {
 
           {/* ── RIGHT: Image Grid ── */}
           <div className="grid grid-cols-2 grid-rows-[200px_200px_200px] gap-3 h-[600px] mid:hidden">
-            {/* Top-left: lobby — row 1, col 1 */}
             <motion.div
               custom={0}
               variants={imgVariants}
@@ -230,7 +246,6 @@ const OurStory = () => {
               />
             </motion.div>
 
-            {/* Top-right + mid-right: pool — spans 2 rows */}
             <motion.div
               custom={1}
               variants={imgVariants}
@@ -245,7 +260,6 @@ const OurStory = () => {
               />
             </motion.div>
 
-            {/* Mid-left: room */}
             <motion.div
               custom={2}
               variants={imgVariants}
@@ -260,7 +274,6 @@ const OurStory = () => {
               />
             </motion.div>
 
-            {/* Bottom-left: gym */}
             <motion.div
               custom={3}
               variants={imgVariants}
@@ -275,7 +288,6 @@ const OurStory = () => {
               />
             </motion.div>
 
-            {/* Bottom-right: gold accent tile */}
             <motion.div
               custom={4}
               variants={imgVariants}
