@@ -1,14 +1,15 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { rooms } from "./Rommdata";
+import { useSelector } from "react-redux";
 import RoomCard from "../../components/RommCard";
 
 const ExploreRooms = () => {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: "-60px" });
 
-  // Show only first 3 rooms on the homepage section
+  // Pull from Redux — same source as RoomsPage, guaranteed to have slug
+  const { rooms, loading } = useSelector((s) => s.rooms);
   const featured = rooms.slice(0, 3);
 
   return (
@@ -26,7 +27,7 @@ const ExploreRooms = () => {
       />
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        {/* ── Header ── */}
+        {/* Header */}
         <div className="text-center mb-14">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,14 +56,33 @@ const ExploreRooms = () => {
           </motion.h2>
         </div>
 
-        {/* ── Cards grid — uses shared RoomCard ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-          {featured.map((room, i) => (
-            <RoomCard key={room.id} room={room} index={i} inView={inView} />
-          ))}
-        </div>
+        {/* Cards grid */}
+        {loading && featured.length === 0 ? (
+          // Skeleton placeholders while rooms load
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="bg-white dark:bg-navy-800 animate-pulse overflow-hidden"
+              >
+                <div className="h-[220px] bg-gray-200 dark:bg-white/10" />
+                <div className="p-5 space-y-3">
+                  <div className="h-5 bg-gray-200 dark:bg-white/10 rounded w-2/3" />
+                  <div className="h-3 bg-gray-200 dark:bg-white/5 rounded w-full" />
+                  <div className="h-9 bg-gray-200 dark:bg-white/10 rounded mt-2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {featured.map((room, i) => (
+              <RoomCard key={room._id} room={room} index={i} inView={inView} />
+            ))}
+          </div>
+        )}
 
-        {/* ── View All button ── */}
+        {/* View All button */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
