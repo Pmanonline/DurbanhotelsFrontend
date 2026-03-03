@@ -34,12 +34,11 @@ import {
   fetchRoomBySlug,
   fetchRooms,
   checkRoomAvailability,
-  getRoomPriceEstimate,
   clearRoomError,
+  // getRoomPriceEstimate intentionally removed — computed locally to prevent infinite loop
 } from "../features/Room/Roomslice";
 import { TestimonialsSlider } from "./testimonial";
 
-// ── Icon resolver ─────────────────────────────────────────────────────────────
 const ICON_MAP = {
   FaWifi,
   FaTv,
@@ -70,7 +69,6 @@ const AmenityIcon = ({ name, className = "w-4 h-4" }) => {
   );
 };
 
-// ── Star Rating ───────────────────────────────────────────────────────────────
 const StarRating = ({ rating = 0, size = "w-4 h-4" }) => (
   <div className="flex items-center gap-0.5">
     {[1, 2, 3, 4, 5].map((s) => (
@@ -88,7 +86,6 @@ const StarRating = ({ rating = 0, size = "w-4 h-4" }) => (
   </div>
 );
 
-// ── Hero Slider ───────────────────────────────────────────────────────────────
 const HeroSlider = ({ images = [], name = "" }) => {
   const [current, setCurrent] = useState(0);
   const PLACEHOLDER =
@@ -121,10 +118,8 @@ const HeroSlider = ({ images = [], name = "" }) => {
           }}
         />
       </AnimatePresence>
-
       <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/10 to-navy-900/30 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-900/20 to-transparent pointer-events-none" />
-
       {imgs.length > 1 && (
         <>
           <button
@@ -141,7 +136,6 @@ const HeroSlider = ({ images = [], name = "" }) => {
           </button>
         </>
       )}
-
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {imgs.map((_, i) => (
           <button
@@ -151,7 +145,6 @@ const HeroSlider = ({ images = [], name = "" }) => {
           />
         ))}
       </div>
-
       <div className="absolute bottom-6 right-8 sm:right-12 text-white/50 text-xs tracking-widest z-10 font-light">
         {String(current + 1).padStart(2, "0")} /{" "}
         {String(imgs.length).padStart(2, "0")}
@@ -161,10 +154,11 @@ const HeroSlider = ({ images = [], name = "" }) => {
 };
 
 // ── Booking Panel ─────────────────────────────────────────────────────────────
+// Price is computed locally — NO getRoomPriceEstimate API call, NO useEffect loop
 const BookingPanel = ({ room }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { availability, priceEstimate } = useSelector((s) => s.rooms);
+  const { availability } = useSelector((s) => s.rooms); // priceEstimate removed
 
   const today = new Date().toISOString().split("T")[0];
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
@@ -178,51 +172,17 @@ const BookingPanel = ({ room }) => {
   const [checked, setChecked] = useState(false);
   const [checking, setChecking] = useState(false);
 
-  // Stable string ID — won't change reference on re-renders
-  const roomId = room?._id;
-  const inFlight = useRef(false);
-  const prevKey = useRef("");
-
   const nights = Math.max(
     1,
     Math.round((new Date(checkOut) - new Date(checkIn)) / 86400000),
   );
 
-  useEffect(() => {
-    if (!roomId) return;
-
-    // Build a composite key from all meaningful inputs
-    const extrasKey = JSON.stringify(extras);
-    const key = `${roomId}|${checkIn}|${checkOut}|${roomCount}|${extrasKey}`;
-
-    // Skip if inputs haven't changed or a request is already in-flight
-    if (key === prevKey.current || inFlight.current) return;
-
-    prevKey.current = key;
-    inFlight.current = true;
-
-    const t = setTimeout(async () => {
-      const selectedExtras = Object.entries(extras)
-        .filter(([, v]) => v)
-        .map(([k]) => ({ label: k }));
-      await dispatch(
-        getRoomPriceEstimate({
-          roomId,
-          checkIn,
-          checkOut,
-          roomCount,
-          extras: selectedExtras,
-        }),
-      );
-      inFlight.current = false;
-    }, 400);
-
-    return () => {
-      clearTimeout(t);
-      inFlight.current = false;
-    };
-    // roomId is a stable string; other deps are primitives — safe
-  }, [roomId, checkIn, checkOut, roomCount, JSON.stringify(extras)]); // eslint-disable-line
+  // All price math done here — zero API calls, zero render loops
+  const basePerNight = room?.pricePerNight ?? 0;
+  const baseTotal = basePerNight * nights * roomCount;
+  const vatAmount = baseTotal * (room?.taxRate ?? 0.075);
+  const svcAmount = baseTotal * (room?.serviceChargeRate ?? 0.05);
+  const grandTotal = baseTotal + vatAmount + svcAmount;
 
   const handleCheckAvailability = async () => {
     setChecking(true);
@@ -241,14 +201,6 @@ const BookingPanel = ({ room }) => {
   };
 
   const isAvailable = availability?.data?.available ?? null;
-  const price = priceEstimate;
-  const basePerNight = room?.pricePerNight ?? 0;
-  const baseTotal = price?.totalBase ?? basePerNight * nights * roomCount;
-  const vatAmount = price?.vatAmount ?? baseTotal * (room?.taxRate ?? 0.075);
-  const svcAmount =
-    price?.serviceChargeAmount ?? baseTotal * (room?.serviceChargeRate ?? 0.05);
-  const grandTotal = price?.grandTotal ?? baseTotal + vatAmount + svcAmount;
-
   const toggleExtra = (label) =>
     setExtras((prev) => ({ ...prev, [label]: !prev[label] }));
 
@@ -504,7 +456,6 @@ const BookingPanel = ({ room }) => {
   );
 };
 
-// ── Skeleton ──────────────────────────────────────────────────────────────────
 const DetailSkeleton = () => (
   <div className="min-h-screen bg-white dark:bg-navy-900 animate-pulse">
     <div className="w-full h-[55vh] sm:h-[65vh] lg:h-[88vh] bg-gray-200 dark:bg-white/10" />
@@ -536,7 +487,6 @@ const DetailSkeleton = () => (
   </div>
 );
 
-// ── Related Room Card ─────────────────────────────────────────────────────────
 const RelatedCard = ({ room }) => {
   const images = room.images?.length
     ? room.images
@@ -601,11 +551,9 @@ const RelatedCard = ({ room }) => {
   );
 };
 
-// ══════════════════════════════════════════════════════════════════════════════
 const RoomDetail = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-
   const {
     currentRoom: room,
     loading,
@@ -631,7 +579,6 @@ const RoomDetail = () => {
     [],
   ); // eslint-disable-line
 
-  // ── Error ─────────────────────────────────────────────────────────────────
   if (error && !loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-navy-900 px-6">
@@ -657,11 +604,8 @@ const RoomDetail = () => {
     );
   }
 
-  // ── Loading / no data yet ─────────────────────────────────────────────────
-  // Show skeleton while fetching OR if cached room doesn't match current slug
   if (loading || !room || room.slug !== slug) return <DetailSkeleton />;
 
-  // ── Normalise ─────────────────────────────────────────────────────────────
   const displayName = room.displayName || room.name || "Room";
   const images = room.images?.length
     ? room.images
@@ -694,9 +638,7 @@ const RoomDetail = () => {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10 lg:py-14">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 xl:gap-16">
-          {/* LEFT */}
           <div>
-            {/* Title */}
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
                 {room.view && (
@@ -738,7 +680,6 @@ const RoomDetail = () => {
               </div>
             </div>
 
-            {/* Quick specs */}
             <div className="flex flex-wrap items-center gap-5 mb-8 pb-8 border-b border-gray-100 dark:border-white/8">
               {[
                 room.size && {
@@ -769,7 +710,6 @@ const RoomDetail = () => {
                 ))}
             </div>
 
-            {/* Description */}
             <div className="mb-10">
               <h2
                 className="text-navy-900 dark:text-white font-bold text-lg mb-4"
@@ -790,7 +730,6 @@ const RoomDetail = () => {
                 ))}
             </div>
 
-            {/* Amenities */}
             {room.amenities?.length > 0 && (
               <div className="mb-10">
                 <h2
@@ -817,7 +756,6 @@ const RoomDetail = () => {
               </div>
             )}
 
-            {/* Includes */}
             {room.includes?.length > 0 && (
               <div className="mb-10">
                 <h2
@@ -842,7 +780,6 @@ const RoomDetail = () => {
               </div>
             )}
 
-            {/* Tags */}
             {room.tags?.length > 0 && (
               <div className="mb-10 flex flex-wrap gap-2">
                 {room.tags.map((tag) => (
@@ -856,19 +793,16 @@ const RoomDetail = () => {
               </div>
             )}
 
-            {/* Mobile booking panel */}
             <div className="lg:hidden mb-10">
               <BookingPanel room={room} />
             </div>
           </div>
 
-          {/* RIGHT */}
           <div className="hidden lg:block">
             <BookingPanel room={room} />
           </div>
         </div>
 
-        {/* Related rooms */}
         {related.length > 0 && (
           <div className="mt-16 pt-12 border-t border-gray-100 dark:border-white/8 max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-8">
