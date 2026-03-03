@@ -45,8 +45,6 @@ export const fetchMenuById = createAsyncThunk(
   async (menuId, { rejectWithValue, getState }) => {
     try {
       const token = getToken(getState);
-      console.log("[fetchMenuById] token:", token);
-
       const response = await axios.get(`${backendURL}/menu/${menuId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

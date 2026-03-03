@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FaChevronLeft,
@@ -11,7 +11,6 @@ import {
   FaBath,
   FaArrowLeft,
   FaCheck,
-  FaCircle,
   FaWifi,
   FaTv,
   FaSnowflake,
@@ -42,25 +41,26 @@ import { TestimonialsSlider } from "./testimonial";
 
 // ── Icon resolver ─────────────────────────────────────────────────────────────
 const ICON_MAP = {
-  FaWifi: FaWifi,
-  FaTv: FaTv,
-  FaSnowflake: FaSnowflake,
-  FaParking: FaParking,
-  FaSwimmingPool: FaSwimmingPool,
-  FaDumbbell: FaDumbbell,
-  FaCoffee: FaCoffee,
-  FaConciergeBell: FaConciergeBell,
-  FaHotTub: FaHotTub,
-  FaCar: FaCar,
-  FaUtensils: FaUtensils,
-  FaShieldAlt: FaShieldAlt,
-  FaSpa: FaSpa,
-  FaWind: FaWind,
-  FaPhone: FaPhone,
-  FaBed: FaBed,
-  MdElevator: MdElevator,
-  MdBalcony: MdBalcony,
+  FaWifi,
+  FaTv,
+  FaSnowflake,
+  FaParking,
+  FaSwimmingPool,
+  FaDumbbell,
+  FaCoffee,
+  FaConciergeBell,
+  FaHotTub,
+  FaCar,
+  FaUtensils,
+  FaShieldAlt,
+  FaSpa,
+  FaWind,
+  FaPhone,
+  FaBed,
+  MdElevator,
+  MdBalcony,
 };
+
 const AmenityIcon = ({ name, className = "w-4 h-4" }) => {
   const Icon = ICON_MAP[name];
   return Icon ? (
@@ -88,7 +88,7 @@ const StarRating = ({ rating = 0, size = "w-4 h-4" }) => (
   </div>
 );
 
-// ── Full-screen Hero Slider ───────────────────────────────────────────────────
+// ── Hero Slider ───────────────────────────────────────────────────────────────
 const HeroSlider = ({ images = [], name = "" }) => {
   const [current, setCurrent] = useState(0);
   const PLACEHOLDER =
@@ -98,7 +98,6 @@ const HeroSlider = ({ images = [], name = "" }) => {
   const prev = () => setCurrent((p) => (p - 1 + imgs.length) % imgs.length);
   const next = () => setCurrent((p) => (p + 1) % imgs.length);
 
-  // Auto-advance
   useEffect(() => {
     if (imgs.length <= 1) return;
     const t = setInterval(next, 6000);
@@ -123,75 +122,40 @@ const HeroSlider = ({ images = [], name = "" }) => {
         />
       </AnimatePresence>
 
-      {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/10 to-navy-900/30 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-navy-900/20 to-transparent pointer-events-none" />
 
-      {/* Nav arrows */}
       {imgs.length > 1 && (
         <>
           <button
             onClick={prev}
-            className="absolute left-5 sm:left-10 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full
-              bg-white/10 hover:bg-white/25 backdrop-blur-sm text-white flex items-center justify-center
-              transition-all duration-200 z-10 border border-white/20 hover:border-white/50 group"
+            className="absolute left-5 sm:left-10 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 z-10 border border-white/20 hover:border-white/50 group"
           >
             <FaChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={next}
-            className="absolute right-5 sm:right-10 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full
-              bg-white/10 hover:bg-white/25 backdrop-blur-sm text-white flex items-center justify-center
-              transition-all duration-200 z-10 border border-white/20 hover:border-white/50 group"
+            className="absolute right-5 sm:right-10 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 z-10 border border-white/20 hover:border-white/50 group"
           >
             <FaChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </>
       )}
 
-      {/* Dot indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {imgs.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`rounded-full transition-all duration-300 ${
-              i === current
-                ? "w-7 h-2 bg-gold-400"
-                : "w-2 h-2 bg-white/40 hover:bg-white/70"
-            }`}
+            className={`rounded-full transition-all duration-300 ${i === current ? "w-7 h-2 bg-gold-400" : "w-2 h-2 bg-white/40 hover:bg-white/70"}`}
           />
         ))}
       </div>
 
-      {/* Counter */}
       <div className="absolute bottom-6 right-8 sm:right-12 text-white/50 text-xs tracking-widest z-10 font-light">
         {String(current + 1).padStart(2, "0")} /{" "}
         {String(imgs.length).padStart(2, "0")}
       </div>
-
-      {/* Thumbnail strip */}
-      {imgs.length > 1 && (
-        <div className="absolute bottom-14 right-8 sm:right-12 flex gap-1.5 z-10">
-          {imgs.slice(0, 4).map((img, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`w-12 h-8 sm:w-16 sm:h-10 overflow-hidden border-2 transition-all duration-200
-                ${i === current ? "border-gold-400 opacity-100" : "border-white/20 opacity-50 hover:opacity-80"}`}
-            >
-              <img src={img} alt="" className="w-full h-full object-cover" />
-            </button>
-          ))}
-          {imgs.length > 4 && (
-            <div className="w-12 h-8 sm:w-16 sm:h-10 bg-black/60 border-2 border-white/20 flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold">
-                +{imgs.length - 4}
-              </span>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };
@@ -200,7 +164,7 @@ const HeroSlider = ({ images = [], name = "" }) => {
 const BookingPanel = ({ room }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { availability, priceEstimate, loading } = useSelector((s) => s.rooms);
+  const { availability, priceEstimate } = useSelector((s) => s.rooms);
 
   const today = new Date().toISOString().split("T")[0];
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
@@ -214,32 +178,52 @@ const BookingPanel = ({ room }) => {
   const [checked, setChecked] = useState(false);
   const [checking, setChecking] = useState(false);
 
+  // Stable string ID — won't change reference on re-renders
+  const roomId = room?._id;
+  const inFlight = useRef(false);
+  const prevKey = useRef("");
+
   const nights = Math.max(
     1,
     Math.round((new Date(checkOut) - new Date(checkIn)) / 86400000),
   );
 
-  // ── Auto-fetch price estimate when dates/count change ─────────────────────
   useEffect(() => {
-    if (!room?._id) return;
-    const t = setTimeout(() => {
+    if (!roomId) return;
+
+    // Build a composite key from all meaningful inputs
+    const extrasKey = JSON.stringify(extras);
+    const key = `${roomId}|${checkIn}|${checkOut}|${roomCount}|${extrasKey}`;
+
+    // Skip if inputs haven't changed or a request is already in-flight
+    if (key === prevKey.current || inFlight.current) return;
+
+    prevKey.current = key;
+    inFlight.current = true;
+
+    const t = setTimeout(async () => {
       const selectedExtras = Object.entries(extras)
         .filter(([, v]) => v)
         .map(([k]) => ({ label: k }));
-      dispatch(
+      await dispatch(
         getRoomPriceEstimate({
-          roomId: room._id,
+          roomId,
           checkIn,
           checkOut,
           roomCount,
           extras: selectedExtras,
         }),
       );
-    }, 300);
-    return () => clearTimeout(t);
-  }, [room?._id, checkIn, checkOut, roomCount, extras, dispatch]);
+      inFlight.current = false;
+    }, 400);
 
-  // ── Check availability ────────────────────────────────────────────────────
+    return () => {
+      clearTimeout(t);
+      inFlight.current = false;
+    };
+    // roomId is a stable string; other deps are primitives — safe
+  }, [roomId, checkIn, checkOut, roomCount, JSON.stringify(extras)]); // eslint-disable-line
+
   const handleCheckAvailability = async () => {
     setChecking(true);
     setChecked(false);
@@ -288,7 +272,6 @@ const BookingPanel = ({ room }) => {
 
   return (
     <div className="bg-navy-900 dark:bg-navy-950 text-white p-6 sm:p-8 sticky top-28">
-      {/* Header */}
       <div className="flex items-baseline justify-between mb-6 pb-5 border-b border-white/10">
         <div>
           <p className="text-white/40 text-[9px] tracking-[0.28em] uppercase mb-1">
@@ -318,7 +301,6 @@ const BookingPanel = ({ room }) => {
         )}
       </div>
 
-      {/* Availability status badge */}
       {!isRoomAvailable && (
         <div className="mb-4 flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20">
           <FaExclamationTriangle className="w-3 h-3 text-red-400 flex-shrink-0" />
@@ -330,7 +312,6 @@ const BookingPanel = ({ room }) => {
         </div>
       )}
 
-      {/* Dates */}
       <div className="grid grid-cols-2 gap-3 mb-3">
         {[
           { label: "Check In", value: checkIn, setter: setCheckIn },
@@ -348,14 +329,12 @@ const BookingPanel = ({ room }) => {
                 setter(e.target.value);
                 setChecked(false);
               }}
-              className="w-full bg-white/5 border border-white/15 focus:border-gold-400
-                text-white text-xs px-3 py-2.5 outline-none transition-colors [color-scheme:dark]"
+              className="w-full bg-white/5 border border-white/15 focus:border-gold-400 text-white text-xs px-3 py-2.5 outline-none transition-colors [color-scheme:dark]"
             />
           </div>
         ))}
       </div>
 
-      {/* Rooms / Adults / Children */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         {[
           {
@@ -387,8 +366,7 @@ const BookingPanel = ({ room }) => {
                 setter(+e.target.value);
                 setChecked(false);
               }}
-              className="w-full bg-white/5 border border-white/15 focus:border-gold-400
-                text-white text-xs px-2 py-2.5 outline-none transition-colors [color-scheme:dark]"
+              className="w-full bg-white/5 border border-white/15 focus:border-gold-400 text-white text-xs px-2 py-2.5 outline-none transition-colors [color-scheme:dark]"
             >
               {opts.map((n) => (
                 <option key={n} value={n} className="bg-navy-900">
@@ -400,13 +378,10 @@ const BookingPanel = ({ room }) => {
         ))}
       </div>
 
-      {/* Check availability button */}
       <button
         onClick={handleCheckAvailability}
         disabled={checking || !room}
-        className="w-full py-2.5 mb-4 border border-white/20 hover:border-gold-400/50
-          text-white/70 hover:text-gold-400 text-[10px] tracking-[0.22em] font-bold
-          uppercase transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full py-2.5 mb-4 border border-white/20 hover:border-gold-400/50 text-white/70 hover:text-gold-400 text-[10px] tracking-[0.22em] font-bold uppercase transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {checking ? (
           <>
@@ -418,19 +393,17 @@ const BookingPanel = ({ room }) => {
         )}
       </button>
 
-      {/* Availability result */}
       <AnimatePresence>
         {checked && isAvailable !== null && (
           <motion.div
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className={`mb-4 px-3 py-2.5 border flex items-center gap-2 text-xs font-semibold
-              ${
-                isAvailable
-                  ? "bg-green-500/10 border-green-500/25 text-green-400"
-                  : "bg-red-500/10 border-red-500/25 text-red-400"
-              }`}
+            className={`mb-4 px-3 py-2.5 border flex items-center gap-2 text-xs font-semibold ${
+              isAvailable
+                ? "bg-green-500/10 border-green-500/25 text-green-400"
+                : "bg-red-500/10 border-red-500/25 text-red-400"
+            }`}
           >
             <span>{isAvailable ? "✓" : "✗"}</span>
             {isAvailable
@@ -440,7 +413,6 @@ const BookingPanel = ({ room }) => {
         )}
       </AnimatePresence>
 
-      {/* Extra services */}
       {room?.extraServices?.length > 0 && (
         <div className="mb-5 pb-5 border-b border-white/10">
           <p className="text-white/60 text-[9px] font-bold tracking-[0.22em] uppercase mb-3">
@@ -455,8 +427,7 @@ const BookingPanel = ({ room }) => {
               >
                 <div className="flex items-center gap-2.5">
                   <div
-                    className={`w-4 h-4 flex-shrink-0 border flex items-center justify-center transition-colors
-                    ${extras[svc.label] ? "bg-gold-500 border-gold-500" : "border-white/25 group-hover:border-gold-400"}`}
+                    className={`w-4 h-4 flex-shrink-0 border flex items-center justify-center transition-colors ${extras[svc.label] ? "bg-gold-500 border-gold-500" : "border-white/25 group-hover:border-gold-400"}`}
                   >
                     {extras[svc.label] && (
                       <FaCheck className="text-white w-2.5 h-2.5" />
@@ -475,7 +446,6 @@ const BookingPanel = ({ room }) => {
         </div>
       )}
 
-      {/* Price breakdown */}
       <div className="mb-5 space-y-1.5 text-xs">
         <div className="flex justify-between text-white/40">
           <span>
@@ -511,18 +481,16 @@ const BookingPanel = ({ room }) => {
         </p>
       </div>
 
-      {/* Book CTA */}
       <motion.button
         whileHover={{ scale: isRoomAvailable ? 1.02 : 1 }}
         whileTap={{ scale: isRoomAvailable ? 0.97 : 1 }}
         onClick={handleBook}
         disabled={!isRoomAvailable}
-        className={`w-full py-4 text-xs tracking-[0.28em] font-bold transition-all duration-300 shadow-lg
-          ${
-            isRoomAvailable
-              ? "bg-gold-500 hover:bg-gold-400 text-white cursor-pointer"
-              : "bg-white/10 text-white/30 cursor-not-allowed"
-          }`}
+        className={`w-full py-4 text-xs tracking-[0.28em] font-bold transition-all duration-300 shadow-lg ${
+          isRoomAvailable
+            ? "bg-gold-500 hover:bg-gold-400 text-white cursor-pointer"
+            : "bg-white/10 text-white/30 cursor-not-allowed"
+        }`}
       >
         {isRoomAvailable ? "BOOK YOUR STAY NOW" : "ROOM UNAVAILABLE"}
       </motion.button>
@@ -536,7 +504,7 @@ const BookingPanel = ({ room }) => {
   );
 };
 
-// ── Skeleton loader ───────────────────────────────────────────────────────────
+// ── Skeleton ──────────────────────────────────────────────────────────────────
 const DetailSkeleton = () => (
   <div className="min-h-screen bg-white dark:bg-navy-900 animate-pulse">
     <div className="w-full h-[55vh] sm:h-[65vh] lg:h-[88vh] bg-gray-200 dark:bg-white/10" />
@@ -568,7 +536,7 @@ const DetailSkeleton = () => (
   </div>
 );
 
-// ── Related Room Card (minimal inline version) ────────────────────────────────
+// ── Related Room Card ─────────────────────────────────────────────────────────
 const RelatedCard = ({ room }) => {
   const images = room.images?.length
     ? room.images
@@ -579,8 +547,7 @@ const RelatedCard = ({ room }) => {
   return (
     <Link
       to={`/rooms/roomdetail/${room.slug}`}
-      className="group flex flex-col bg-white dark:bg-navy-800 overflow-hidden
-        shadow-[0_4px_20px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-shadow duration-300"
+      className="group flex flex-col bg-white dark:bg-navy-800 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-shadow duration-300"
     >
       <div className="relative h-[200px] overflow-hidden">
         <img
@@ -626,37 +593,18 @@ const RelatedCard = ({ room }) => {
         <p className="text-gray-500 dark:text-white/40 text-sm line-clamp-2 mb-4">
           {room.description}
         </p>
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.97 }}
-          className="mt-auto w-full py-2.5 bg-gold-500 hover:bg-gold-400 text-white
-            text-xs tracking-[0.18em] font-bold text-center transition-all duration-300"
-        >
+        <div className="mt-auto w-full py-2.5 bg-gold-500 hover:bg-gold-400 text-white text-xs tracking-[0.18em] font-bold text-center transition-all duration-300">
           VIEW ROOM
-        </motion.div>
+        </div>
       </div>
     </Link>
   );
 };
 
-// ── Motion variants ───────────────────────────────────────────────────────────
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
-
-// ══════════════════════════════════════════════════════════════════════════════
-// RoomDetail Page
 // ══════════════════════════════════════════════════════════════════════════════
 const RoomDetail = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const bodyRef = useRef(null);
-  const inView = useInView(bodyRef, { once: true, margin: "-40px" });
 
   const {
     currentRoom: room,
@@ -665,24 +613,25 @@ const RoomDetail = () => {
     rooms: relatedRooms,
   } = useSelector((s) => s.rooms);
 
-  // ── Fetch room by slug ────────────────────────────────────────────────────
   useEffect(() => {
     if (!slug) return;
-    dispatch(fetchRoomBySlug(slug));
-    // Scroll to top on slug change
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [slug, dispatch]);
+    dispatch(fetchRoomBySlug(slug));
+  }, [slug]); // eslint-disable-line
 
-  // ── Fetch related rooms (same category, exclude self) ─────────────────────
   useEffect(() => {
     if (!room?.category) return;
     dispatch(fetchRooms({ category: room.category, limit: 3, page: 1 }));
-  }, [room?.category, dispatch]);
+  }, [room?.category]); // eslint-disable-line
 
-  // Clear error on unmount
-  useEffect(() => () => dispatch(clearRoomError()), [dispatch]);
+  useEffect(
+    () => () => {
+      dispatch(clearRoomError());
+    },
+    [],
+  ); // eslint-disable-line
 
-  // ── Error state ───────────────────────────────────────────────────────────
+  // ── Error ─────────────────────────────────────────────────────────────────
   if (error && !loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-navy-900 px-6">
@@ -700,8 +649,7 @@ const RoomDetail = () => {
         </p>
         <Link
           to="/rooms"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-400
-            text-white text-xs tracking-[0.22em] font-bold transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-400 text-white text-xs tracking-[0.22em] font-bold transition-all"
         >
           <FaArrowLeft className="w-3 h-3" /> BROWSE ALL ROOMS
         </Link>
@@ -709,11 +657,11 @@ const RoomDetail = () => {
     );
   }
 
-  // ── Loading skeleton ──────────────────────────────────────────────────────
-  if (loading && !room) return <DetailSkeleton />;
-  if (!room) return <DetailSkeleton />;
+  // ── Loading / no data yet ─────────────────────────────────────────────────
+  // Show skeleton while fetching OR if cached room doesn't match current slug
+  if (loading || !room || room.slug !== slug) return <DetailSkeleton />;
 
-  // ── Normalise fields ──────────────────────────────────────────────────────
+  // ── Normalise ─────────────────────────────────────────────────────────────
   const displayName = room.displayName || room.name || "Room";
   const images = room.images?.length
     ? room.images
@@ -733,36 +681,23 @@ const RoomDetail = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-navy-900">
-      {/* Hero */}
       <HeroSlider images={images} name={displayName} />
 
-      {/* Back link */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-6">
         <Link
           to="/rooms"
-          className="inline-flex items-center gap-2 text-gray-400 dark:text-white/40
-            hover:text-gold-500 dark:hover:text-gold-400 text-xs tracking-[0.2em] transition-colors"
+          className="inline-flex items-center gap-2 text-gray-400 dark:text-white/40 hover:text-gold-500 dark:hover:text-gold-400 text-xs tracking-[0.2em] transition-colors"
         >
           <FaArrowLeft className="w-3 h-3" /> BACK TO ROOMS
         </Link>
       </div>
 
-      {/* Main content */}
-      <div
-        ref={bodyRef}
-        className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10 lg:py-14"
-      >
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-10 lg:py-14">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 xl:gap-16">
-          {/* ═══ LEFT ═══════════════════════════════════════════════════════ */}
+          {/* LEFT */}
           <div>
-            {/* Title block */}
-            <motion.div
-              custom={0}
-              variants={fadeUp}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="mb-6"
-            >
+            {/* Title */}
+            <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
                 {room.view && (
                   <p className="text-gold-500 text-xs tracking-[0.3em] font-semibold uppercase">
@@ -797,21 +732,14 @@ const RoomDetail = () => {
                     /night
                   </span>
                 </span>
-                {/* Category badge */}
                 <span className="text-[10px] font-bold uppercase tracking-[0.15em] border border-gold-500/30 bg-gold-500/10 text-gold-500 px-2.5 py-1">
                   {room.category}
                 </span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Quick specs */}
-            <motion.div
-              custom={1}
-              variants={fadeUp}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="flex flex-wrap items-center gap-5 mb-8 pb-8 border-b border-gray-100 dark:border-white/8"
-            >
+            <div className="flex flex-wrap items-center gap-5 mb-8 pb-8 border-b border-gray-100 dark:border-white/8">
               {[
                 room.size && {
                   icon: <FaRulerCombined className="text-gold-500 w-4 h-4" />,
@@ -839,16 +767,10 @@ const RoomDetail = () => {
                     {icon} {val}
                   </span>
                 ))}
-            </motion.div>
+            </div>
 
             {/* Description */}
-            <motion.div
-              custom={2}
-              variants={fadeUp}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="mb-10"
-            >
+            <div className="mb-10">
               <h2
                 className="text-navy-900 dark:text-white font-bold text-lg mb-4"
                 style={{ fontFamily: "'Playfair Display', serif" }}
@@ -866,17 +788,11 @@ const RoomDetail = () => {
                     {para}
                   </p>
                 ))}
-            </motion.div>
+            </div>
 
-            {/* Amenities grid */}
+            {/* Amenities */}
             {room.amenities?.length > 0 && (
-              <motion.div
-                custom={3}
-                variants={fadeUp}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                className="mb-10"
-              >
+              <div className="mb-10">
                 <h2
                   className="text-navy-900 dark:text-white font-bold text-lg mb-5"
                   style={{ fontFamily: "'Playfair Display', serif" }}
@@ -887,9 +803,7 @@ const RoomDetail = () => {
                   {room.amenities.map((a, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-3 p-3.5 bg-gray-50 dark:bg-white/[0.03]
-                        border border-gray-100 dark:border-white/8
-                        hover:border-gold-400/50 transition-colors group"
+                      className="flex items-center gap-3 p-3.5 bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/8 hover:border-gold-400/50 transition-colors"
                     >
                       <span className="text-gold-500 flex-shrink-0">
                         <AmenityIcon name={a.icon} className="w-4 h-4" />
@@ -900,18 +814,12 @@ const RoomDetail = () => {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             )}
 
             {/* Includes */}
             {room.includes?.length > 0 && (
-              <motion.div
-                custom={4}
-                variants={fadeUp}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                className="mb-10"
-              >
+              <div className="mb-10">
                 <h2
                   className="text-navy-900 dark:text-white font-bold text-lg mb-5"
                   style={{ fontFamily: "'Playfair Display', serif" }}
@@ -922,8 +830,7 @@ const RoomDetail = () => {
                   {room.includes.map((item) => (
                     <li
                       key={item}
-                      className="flex items-center gap-3 text-gray-600 dark:text-white/55 text-sm
-                        py-2.5 border-b border-gray-100 dark:border-white/[0.06] last:border-0"
+                      className="flex items-center gap-3 text-gray-600 dark:text-white/55 text-sm py-2.5 border-b border-gray-100 dark:border-white/[0.06] last:border-0"
                     >
                       <div className="w-4 h-4 flex-shrink-0 bg-gold-500/10 border border-gold-500/30 flex items-center justify-center">
                         <FaCheck className="text-gold-500 w-2 h-2" />
@@ -932,31 +839,21 @@ const RoomDetail = () => {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             )}
 
             {/* Tags */}
             {room.tags?.length > 0 && (
-              <motion.div
-                custom={5}
-                variants={fadeUp}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                className="mb-10"
-              >
-                <div className="flex flex-wrap gap-2">
-                  {room.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider
-                        border border-gray-200 dark:border-white/10 text-gray-400 dark:text-white/30
-                        hover:border-gold-500/30 hover:text-gold-500 transition-colors cursor-default"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+              <div className="mb-10 flex flex-wrap gap-2">
+                {room.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border border-gray-200 dark:border-white/10 text-gray-400 dark:text-white/30 hover:border-gold-500/30 hover:text-gold-500 transition-colors cursor-default"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             )}
 
             {/* Mobile booking panel */}
@@ -965,20 +862,15 @@ const RoomDetail = () => {
             </div>
           </div>
 
-          {/* ═══ RIGHT — Sticky booking panel ═══════════════════════════════ */}
+          {/* RIGHT */}
           <div className="hidden lg:block">
             <BookingPanel room={room} />
           </div>
         </div>
 
-        {/* ── Related rooms ── */}
+        {/* Related rooms */}
         {related.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.45 }}
-            className="mt-16 pt-12 border-t border-gray-100 dark:border-white/8"
-          >
+          <div className="mt-16 pt-12 border-t border-gray-100 dark:border-white/8 max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <h2
                 className="text-2xl sm:text-3xl font-bold text-navy-900 dark:text-white"
@@ -998,10 +890,8 @@ const RoomDetail = () => {
                 <RelatedCard key={r._id} room={r} />
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
-
-        {/* TESTIMONIALS */}
 
         <TestimonialsSlider />
       </div>
