@@ -88,7 +88,7 @@ export const TESTIMONIALS = [
     name: "Emeka Nwachukwu",
     role: "Diplomat",
     rating: 5,
-    text: "For international visitors, DurbanInternational sets a standard that rivals properties I've stayed at globally. The airport transfer alone was worth every naira.",
+    text: "For international visitors, DubanInternational sets a standard that rivals properties I've stayed at globally. The airport transfer alone was worth every naira.",
     avatar: "https://randomuser.me/api/portraits/men/91.jpg",
     source: "direct",
     date: "5 days ago",
@@ -521,7 +521,7 @@ const TestimonialsPage = () => {
 
             {/* CTA */}
             <a
-              href="https://www.google.com/travel/search?q=durban%20hotel%20ogba&g2lb=4965990%2C72471280%2C72560029%2C72573224%2C72647020%2C72686036%2C72803964%2C72882230%2C72958624%2C73059275%2C73064764%2C73249150%2C121522131&hl=en-NG&gl=ng&ssta=1&ts=CAEaRgooEiYyJDB4MTAzYjkzOGE4YWIxZTY4NToweDkxNzE4YmNmNmIxM2E2YhIaEhQKBwjqDxACGBoSBwjqDxACGBsYATICEAA&qs=CAEyE0Nnb0k2X1RFdGMtWHhvc0pFQUU4AkIJCWs6sfa8GBcJQgkJazqx9rwYFwk&ap=ugEHcmV2aWV3cw&ictx=111&ved=0CAAQ5JsGahcKEwiQhfjL-vaSAxUAAAAAHQAAAAAQBw"
+              href="https://www.google.com/travel/search?q=Duban%20hotel%20ogba&g2lb=4965990%2C72471280%2C72560029%2C72573224%2C72647020%2C72686036%2C72803964%2C72882230%2C72958624%2C73059275%2C73064764%2C73249150%2C121522131&hl=en-NG&gl=ng&ssta=1&ts=CAEaRgooEiYyJDB4MTAzYjkzOGE4YWIxZTY4NToweDkxNzE4YmNmNmIxM2E2YhIaEhQKBwjqDxACGBoSBwjqDxACGBsYATICEAA&qs=CAEyE0Nnb0k2X1RFdGMtWHhvc0pFQUU4AkIJCWs6sfa8GBcJQgkJazqx9rwYFwk&ap=ugEHcmV2aWV3cw&ictx=111&ved=0CAAQ5JsGahcKEwiQhfjL-vaSAxUAAAAAHQAAAAAQBw"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5

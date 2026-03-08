@@ -341,7 +341,7 @@ const ContactUs = () => {
                          shadow-md mb-8 relative"
             >
               <iframe
-                title="DurbanInternational Hotel Location"
+                title="DubanInternational Hotel Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4013504295!2d3.3360376749039917!3d6.622839293361065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9226c0f7af0b%3A0x45fb9f3a68fb19b7!2sDuban%20International%20Hotel!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
                 width="100%"
                 height="100%"
@@ -360,7 +360,7 @@ const ContactUs = () => {
                 <FaMapMarkerAlt className="text-gold-400 w-3.5 h-3.5 flex-shrink-0" />
                 <div>
                   <p className="text-[11px] font-bold tracking-wide">
-                    DurbanInternational Hotel
+                    DubanInternational Hotel
                   </p>
                   <p className="text-[10px] text-white/45">
                     63 Ogunnusi Rd, Aguda, Lagos

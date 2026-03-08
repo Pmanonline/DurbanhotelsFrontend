@@ -26,10 +26,10 @@ const slides = [
   {
     label: "BUSINESS & LEISURE",
     headline: ["Elevated", "Hospitality"],
-    sub: "Experience DurbanInternational Hotel—an oasis in Ogba where intuitive service, contemporary design, and the heartbeat of Lagos meet",
+    sub: "Experience DubanInternational Hotel—an oasis in Ogba where intuitive service, contemporary design, and the heartbeat of Lagos meet",
   },
   {
-    label: "WELCOME TO DURBAN INTERNATIONAL",
+    label: "WELCOME TO DUBAN INTERNATIONAL",
     headline: ["An Oasis", "in Lagos"],
     sub: "From executive suites to tranquil wellness spaces, every detail is crafted to keep you connected, restored, and inspired",
   },

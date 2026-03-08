@@ -196,7 +196,7 @@ const AdminLogin = () => {
           <Link to="/" className="inline-block mb-4">
             <img
               src={isDarkMode ? DubanLogoWhite : DubanLogo}
-              alt="DurbanInternational Hotel"
+              alt="DubanInternational Hotel"
               className="h-16 w-auto mx-auto transition-all duration-300"
             />
           </Link>
@@ -236,7 +236,7 @@ const AdminLogin = () => {
                 isDarkMode ? "text-white/40" : "text-navy-500"
               }`}
             >
-              SECURED BY DURBAN
+              SECURED BY DUBAN
             </span>
           </div>
 

@@ -340,7 +340,7 @@ const ServicesPage = () => {
       <div className="relative h-[45vh] sm:h-[55vh] overflow-hidden bg-navy-900">
         <img
           src={HeroImage}
-          alt="DurbanServices"
+          alt="DubanServices"
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />
         <div className="absolute inset-0 bg-navy-900/62" />

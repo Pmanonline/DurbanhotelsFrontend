@@ -265,7 +265,7 @@ const GymWellnessPage = () => {
           >
             <span className="w-10 h-px bg-gold-500" />
             <span className="text-gold-400 text-[11px] tracking-[0.42em] font-bold uppercase">
-              Durban International Hotel
+              Duban International Hotel
             </span>
           </motion.div>
 
@@ -336,7 +336,7 @@ const GymWellnessPage = () => {
           >
             <span className="w-10 h-px bg-gold-500" />
             <span className="text-gold-400 text-[11px] tracking-[0.42em] font-bold uppercase">
-              DurbanInternational Hotel
+              DubanInternational Hotel
             </span>
             <span className="w-10 h-px bg-gold-500" />
           </motion.div>
@@ -441,7 +441,7 @@ const GymWellnessPage = () => {
         >
           Whether you're here for business or leisure, our wellness offerings
           are designed to fit your schedule and your goals. From an early
-          morning gym session to a restorative poolside evening — Durban
+          morning gym session to a restorative poolside evening — Duban
           International keeps you feeling your best.
         </motion.p>
       </div>

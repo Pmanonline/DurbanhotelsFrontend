@@ -23,10 +23,10 @@ import BookingPDFTemplate, {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const BANK_DETAILS = {
-  companyName: "Durban International Hotel Ltd",
+  companyName: "Duban International Hotel Ltd",
   bankName: "First Bank of Nigeria",
   bankAddress: "Lagos, Nigeria",
-  beneficiaryName: "DurbanInternational Hotels & Resorts",
+  beneficiaryName: "DubanInternational Hotels & Resorts",
   accountNumber: "2012345678",
   sortCode: "011",
   swiftCode: "FBNINGLA",
@@ -389,7 +389,7 @@ const HotelInfoBlock = () => (
           icon: (
             <FaMapMarkerAlt className="w-3.5 h-3.5 text-gold-500 flex-shrink-0 mt-0.5" />
           ),
-          text: "DurbanInternational Hotel, Ogba, Lagos State, Nigeria",
+          text: "DubanInternational Hotel, Ogba, Lagos State, Nigeria",
         },
         {
           icon: (

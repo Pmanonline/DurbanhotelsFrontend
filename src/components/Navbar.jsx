@@ -7,7 +7,7 @@ import { FaXTwitter, FaFacebook, FaYoutube, FaLinkedin } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../features/Theme/themeSlice";
 
-import DubanLogo from "../assets/images/DubanLogo.png";
+import DubanLogo from "../assets/images/DubanLogoWhite.png";
 import DubanLogoWhite from "../assets/images/DubanLogoWhite.png";
 import HeroImage1 from "../assets/images/heroImage1.jpg";
 
@@ -138,11 +138,11 @@ const Navbar = () => {
             <Link
               to="/"
               className="absolute left-1/2 -translate-x-1/2"
-              aria-label="DurbanInternational Hotel"
+              aria-label="DubanInternational Hotel"
             >
               <img
                 src={isDark ? DubanLogoWhite : DubanLogo}
-                alt="DurbanInternational Hotel"
+                alt="DubanInternational Hotel"
                 className="h-10 sm:h-12 w-auto"
               />
             </Link>
@@ -302,7 +302,7 @@ const Navbar = () => {
                               lg:w-[36%]"
               >
                 <p className="text-gold-400 text-[10px] tracking-[0.3em] mb-5 lg:mb-8">
-                  DURBAN INTERNATIONAL HOTEL
+                  DUBAN INTERNATIONAL HOTEL
                 </p>
                 <nav className="space-y-0.5">
                   {overlayNav.map((item, i) => (
@@ -344,7 +344,7 @@ const Navbar = () => {
                 <div className="w-full max-w-[420px] h-[62vh] overflow-hidden">
                   <img
                     src={HeroImage1}
-                    alt="DurbanInternational Hotel"
+                    alt="DubanInternational Hotel"
                     className="w-full h-full object-cover"
                   />
                 </div>

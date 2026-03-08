@@ -34,7 +34,7 @@ const TABS = ["Venues", "Corporate Events", "Private Events"];
 
 const VENUES = [
   {
-    name: "DurbanGrand Hall",
+    name: "DubanGrand Hall",
     size: "580 m²",
     image: LobbyImage,
     capacity: [
@@ -200,7 +200,7 @@ const MeetingsEventsPage = () => {
           >
             <span className="w-8 sm:w-10 h-px bg-gold-500" />
             <span className="text-gold-400 text-[9px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.42em] font-bold uppercase whitespace-nowrap">
-              DurbanInternational Hotel
+              DubanInternational Hotel
             </span>
             <span className="w-8 sm:w-10 h-px bg-gold-500" />
           </motion.div>
@@ -477,7 +477,7 @@ const MeetingsEventsPage = () => {
                     <tbody>
                       {[
                         {
-                          name: "DurbanGrand Hall",
+                          name: "DubanGrand Hall",
                           size: 580,
                           banquet: 300,
                           classroom: 200,

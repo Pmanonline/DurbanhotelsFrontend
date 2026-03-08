@@ -160,7 +160,7 @@ const Footer = () => {
             <Link to="/" className="inline-block mb-6">
               <img
                 src={DubanLogoWhite}
-                alt="DURBAN International Hotel"
+                alt="DUBAN International Hotel"
                 className="h-12 w-auto"
               />
             </Link>
@@ -258,7 +258,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <div className="text-white/40 text-xs text-center lg:text-left">
-              © {currentYear} DurbanInternational Hotel. All Rights Reserved.
+              © {currentYear} DubanInternational Hotel. All Rights Reserved.
             </div>
 
             {/* Payment Methods */}

@@ -324,7 +324,7 @@ export default function AdminDashboard() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-gold-500 text-xs font-bold tracking-[0.3em] uppercase">
-                DurbanInternational Hotel
+                DubanInternational Hotel
               </span>
               <span className="w-1 h-1 rounded-full bg-gold-500/50" />
               <span className="text-xs text-gray-400 dark:text-white/30">

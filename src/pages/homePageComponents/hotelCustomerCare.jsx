@@ -214,7 +214,7 @@ const HotelCustomerCare = () => {
             className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-navy-900/80 to-transparent"
           >
             <p className="text-white/70 text-[10px] tracking-[0.3em] uppercase font-medium">
-              durban International Hotel — Ogba, Lagos
+              Duban International Hotel — Ogba, Lagos
             </p>
           </motion.div>
         </motion.div>

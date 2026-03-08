@@ -49,7 +49,7 @@ const STATS = [
 const ABOUT_ITEMS = [
   {
     label: "Overview",
-    text: "DurbanInternational Hotel is Ogba/Ikeja's contemporary hospitality hub, uniting cosmopolitan design with heartfelt Nigerian service to create a seamless experience for business leaders, diplomats, and lifestyle seekers.",
+    text: "DubanInternational Hotel is Ogba/Ikeja's contemporary hospitality hub, uniting cosmopolitan design with heartfelt Nigerian service to create a seamless experience for business leaders, diplomats, and lifestyle seekers.",
   },
   {
     label: "Location & Connectivity",
@@ -57,7 +57,7 @@ const ABOUT_ITEMS = [
   },
   {
     label: "Luxury Narrative",
-    text: "From the double-height lobby to curated Nigerian artworks, every corner narrates the Durbanstory — timeless finishes, intuitive technology, and personalised hosts who anticipate needs around the clock.",
+    text: "From the double-height lobby to curated Nigerian artworks, every corner narrates the Dubanstory — timeless finishes, intuitive technology, and personalised hosts who anticipate needs around the clock.",
   },
   {
     label: "Accommodations",
@@ -163,7 +163,7 @@ const AboutUs = () => {
       <div className="relative h-[45vh] sm:h-[55vh] overflow-hidden bg-navy-900">
         <motion.img
           src={HeroImage}
-          alt="DurbanInternational Hotel"
+          alt="DubanInternational Hotel"
           style={{ y: heroY }}
           className="absolute inset-0 w-full h-full object-cover scale-110"
         />
@@ -232,7 +232,7 @@ const AboutUs = () => {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-navy-900 dark:text-white"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Discover <span className="text-gold-500">DURBAN</span>
+                Discover <span className="text-gold-500">DUBAN</span>
                 <br />
                 INTERNATIONAL HOTEL
               </h2>
@@ -275,7 +275,7 @@ const AboutUs = () => {
                              text-xs tracking-[0.28em] font-bold
                              transition-all duration-300 shadow-lg group"
                 >
-                  EXPLORE THE DURBAN EXPERIENCE
+                  EXPLORE THE DUBAN EXPERIENCE
                   <FaArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200" />
                 </motion.button>
               </Link>
@@ -450,9 +450,8 @@ const AboutUs = () => {
             Hotel Amenities
           </h2>
           <p className="text-gray-400 dark:text-white/40 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
-            Every detail at DurbanInternational is curated to exceed
-            expectations — from world-class facilities to bespoke personal
-            service.
+            Every detail at DubanInternational is curated to exceed expectations
+            — from world-class facilities to bespoke personal service.
           </p>
         </motion.div>
 

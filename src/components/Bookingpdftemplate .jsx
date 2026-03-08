@@ -229,7 +229,7 @@ const BookingPDFTemplate = ({
               fontFamily: "Georgia, serif",
             }}
           >
-            DurbanInternational
+            DubanInternational
           </div>
           <div
             style={{
@@ -473,7 +473,7 @@ const BookingPDFTemplate = ({
                 <Row label="Bank" value="First Bank of Nigeria" />
                 <Row
                   label="Account Name"
-                  value="DurbanInternational Hotels & Resorts"
+                  value="DubanInternational Hotels & Resorts"
                 />
                 <Row label="Account Number" value="2012345678" />
                 <Row label="Sort Code" value="011" />
@@ -718,7 +718,7 @@ const BookingPDFTemplate = ({
         }}
       >
         <div style={{ fontSize: 8, color: "#d1d5db", letterSpacing: "0.1em" }}>
-          DURBAN INTERNATIONAL HOTEL · LAGOS, NIGERIA
+          DUBAN INTERNATIONAL HOTEL · LAGOS, NIGERIA
         </div>
         <div style={{ fontSize: 8, color: "#d1d5db" }}>
           {isDeposit

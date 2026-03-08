@@ -177,7 +177,7 @@ const NotFound = () => {
         transition={{ delay: 1, duration: 0.6 }}
         className="absolute bottom-6 text-[10px] text-white/15 tracking-[0.3em] uppercase"
       >
-        © Durban International Hotel · Lagos, Nigeria
+        © Duban International Hotel · Lagos, Nigeria
       </motion.div>
     </div>
   );

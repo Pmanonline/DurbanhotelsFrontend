@@ -145,9 +145,9 @@ export const rooms = [
     beds: "1 Double Bed",
     baths: 1,
     description:
-      "Our Standard Room offers everything you need for a comfortable stay — a cozy double bed, modern amenities, and the warm hospitality DurbanInternational is known for.",
+      "Our Standard Room offers everything you need for a comfortable stay — a cozy double bed, modern amenities, and the warm hospitality DubanInternational is known for.",
     longDescription:
-      "Our Standard Room offers everything you need for a comfortable stay — a cozy double bed, modern amenities, and the warm hospitality DurbanInternational is known for across Lagos.\n\nPerfect for the budget-conscious traveller who refuses to compromise on comfort. The Standard Room delivers a clean, well-appointed space with all the essentials to make your Lagos visit memorable.",
+      "Our Standard Room offers everything you need for a comfortable stay — a cozy double bed, modern amenities, and the warm hospitality DubanInternational is known for across Lagos.\n\nPerfect for the budget-conscious traveller who refuses to compromise on comfort. The Standard Room delivers a clean, well-appointed space with all the essentials to make your Lagos visit memorable.",
     images: [Room3a, Room3b],
     amenities: [
       { icon: <FaWifi />, label: "Free WiFi" },

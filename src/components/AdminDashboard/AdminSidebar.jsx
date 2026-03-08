@@ -212,10 +212,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
           className={`flex items-center gap-3 px-4 py-5 border-b border-gray-200 dark:border-white/10 flex-shrink-0 ${isCollapsed ? "justify-center px-2" : ""}`}
         >
           <div className="w-9 h-9 flex-shrink-0 border border-gold-500/30 bg-gold-500/10 flex items-center justify-center">
-            <Link to="/" className="" aria-label="DurbanInternational Hotel">
+            <Link to="/" className="" aria-label="DubanInternational Hotel">
               <img
                 src={DubanLogo}
-                alt="DurbanInternational Hotel"
+                alt="DubanInternational Hotel"
                 className="h-8 sm:h-8 w-auto"
               />
             </Link>
@@ -223,7 +223,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
           {!isCollapsed && (
             <div className="overflow-hidden">
               <div className="font-heading text-sm font-bold text-navy-900 dark:text-white truncate">
-                DurbanInternational
+                DubanInternational
               </div>
               <div className="text-[8px] text-gold-500 tracking-[0.2em] uppercase">
                 Admin Portal

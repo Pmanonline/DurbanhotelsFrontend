@@ -153,7 +153,7 @@ const OurStory = () => {
             >
               Welcome to{" "}
               <span className="text-gold-500">
-                DURBAN
+                DUBAN
                 <br />
                 INTERNATIONAL HOTEL
               </span>
@@ -167,7 +167,7 @@ const OurStory = () => {
               animate={inView ? "visible" : "hidden"}
               className="text-gray-600 dark:text-white/60 text-sm sm:text-base leading-relaxed mb-10 max-w-lg"
             >
-              Rooted in the vibrant Ogba district, Ikeja, Durban International
+              Rooted in the vibrant Ogba district, Ikeja, Duban International
               Hotel has become the trusted address for C-suite travellers,
               weekend explorers, and global delegations seeking Lagos at its
               best. Our concierge-led experiences, award-winning dining, and

@@ -452,7 +452,7 @@ const Lightbox = ({
             {item.caption}
           </p>
           <p className="text-[10px] text-white/30 tracking-[0.2em] mt-0.5 uppercase">
-            DurbanInternational Hotel
+            DubanInternational Hotel
           </p>
         </div>
 
@@ -755,7 +755,7 @@ const GalleryPage = () => {
             className="text-3xl sm:text-4xl font-bold text-white mb-6"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Stay at DurbanInternational
+            Stay at DubanInternational
           </h3>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/rooms">
